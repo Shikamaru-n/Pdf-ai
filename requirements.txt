@@ -1,0 +1,15 @@
+streamlit
+langchain_groq 
+langchain_community 
+pypdf 
+PyPDF2==3.0.1
+sentence_transformers
+python-dotenv
+chromadb
+langchain-chroma
+langchain-text-splitters
+rank_bm25
+langchain-huggingface
+youtube-transcript-api
+pytube
+torch

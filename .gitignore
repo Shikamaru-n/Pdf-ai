@@ -1,0 +1,32 @@
+# Python ignores
+__pycache__/
+*.pyc
+
+# Virtual environments
+rag_env/
+venv/
+env/
+.venv/
+
+# OS / Editor files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Secrets & configs
+.env
+*.json
+
+# Data & cache
+db/
+temp/
+Documents/
+*.bin
+
+# Streamlit cache
+.streamlit/
+
+# Jupyter / notebooks
+*.ipynb_checkpoints
+
