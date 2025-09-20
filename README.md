@@ -99,15 +99,16 @@ http://localhost:8501
 ## 📂 Project Structure
 
 ```
-Naive RAG Project/
-│── ragapp.py          # Main streamlit app
-│── requirements.txt   # Project dependencies
-│── README.md          # Project documentation
-│── .gitignore         # ignore faiss_db/, .env, temp/ files
-│── .env               # Local API key storage (not pushed to Git)
+pdf-ai/
+│── ragapp.py              # Main Streamlit app
+│── requirements.txt       # Project dependencies
+│── README.md              # Project documentation
+│── .gitignore             # Ignore faiss_db/, .env, temp/ files
+│── .env                   # Local API key storage (not pushed to Git)
 │
-├── Documents/         # Optional sample PDFs
-├── helper/            # Helper scripts
+├── Documents/             # Optional sample PDFs
+├── helper/                # Helper scripts
+
 ```
 
 > ⚠️ At runtime, a **faiss_db/** folder (FAISS vectore store) and a **temp/** folder will be created automatically. These are excluded from Git via .gitignore.
