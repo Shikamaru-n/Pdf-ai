@@ -3,12 +3,12 @@ from langchain_core.documents import Document
 from langchain.retrievers import ContextualCompressionRetriever, EnsembleRetriever
 from langchain.retrievers.document_compressors import CrossEncoderReranker
 from langchain_community.cross_encoders import HuggingFaceCrossEncoder
-from langchain_community.vectorstores import Chroma
+from langchain_community.vectorstores import FAISS
 from langchain_community.retrievers import BM25Retriever
 
 
 def create_retriever(
-    vectorstore: Chroma,
+    vectorstore: FAISS,
     docs: List[Document],
     search_k: int = 25,
     reranker_top_n: int = 5,
@@ -18,15 +18,16 @@ def create_retriever(
 ) -> ContextualCompressionRetriever:
     """
     Creates a hybrid retriever (dense MMR + sparse BM25) with reranking.
+    This version only supports FAISS vector store.
     """
 
-    if not isinstance(vectorstore, Chroma):
-        raise ValueError("The provided vectorstore must be a Chroma instance.")
+    if not isinstance(vectorstore, FAISS):
+        raise ValueError("❌ The provided vectorstore must be a FAISS instance.")
 
     if not docs or len(docs) == 0:
-        raise ValueError("No documents provided for BM25 retriever. Did chunking fail?")
+        raise ValueError("❌ No documents provided for BM25 retriever. Did chunking fail?")
 
-    print("🔍 Initializing hybrid retriever (dense MMR + sparse BM25) with reranking...")
+    print("🔍 Initializing FAISS-based hybrid retriever (dense MMR + sparse BM25 + reranker)...")
     print(f"   • Loaded {len(docs)} docs for BM25")
 
     # 1. Dense retriever with MMR
@@ -41,7 +42,7 @@ def create_retriever(
         sparse_retriever.k = search_k
         print("   • BM25 retriever initialized")
     except Exception as e:
-        raise RuntimeError(f"BM25 retriever failed: {e}")
+        raise RuntimeError(f"❌ BM25 retriever failed: {e}")
 
     # 3. Hybrid retriever (dense + sparse)
     hybrid_retriever = EnsembleRetriever(
@@ -59,5 +60,5 @@ def create_retriever(
         base_compressor=reranker,
     )
 
-    print("✅ Hybrid retriever (MMR + BM25 + reranker) initialized successfully.")
+    print("✅ Hybrid retriever (FAISS + BM25 + reranker) initialized successfully.")
     return compression_retriever

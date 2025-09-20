@@ -1,15 +1,16 @@
 # PDF Q&A App – Chat with Your PDFs
 
-This project implements a **Retrieval-Augmented Generation (RAG)** chatbot that allows you to **upload PDFs** and **query their content** using **GROQ LLM** and a **Chroma vector store**.  
+This project implements a **Retrieval-Augmented Generation (RAG)** chatbot that allows you to **upload PDFs** and **query their content** using **GROQ LLM** and a **FAISS vector store**.  
 It is built with **LangChain** and deployed via **Streamlit**.
 
 ---
 
 ## ✨ Features
 - 📄 Upload and process **PDF documents**
-- 🧠 Store and query embeddings in **Chroma** (local vector database)
-- 🔍 Hybrid retrieval (dense + sparse search with reranking)
+- 🧠 Store and query embeddings in **FAISS** (local vector database)
+- 🔍 Hybrid retrieval (dense + sparse BM25 with reranking via Cross-Encoder)
 - 💬 Answer questions strictly from your documents (no outside knowledge)
+- 🔒 API key management via `.env`
 - 🛠️ Modular, well-commented code for easy extension
 - 🎨 Simple Streamlit UI for chat-like experience
 
@@ -102,11 +103,11 @@ Naive RAG Project/
 │── ragapp.py          # Main streamlit app
 │── requirements.txt   # Project dependencies
 │── README.md          # Project documentation
-│── .gitignore         # ignore db/, .env, temp/ files
+│── .gitignore         # ignore faiss_db/, .env, temp/ files
 │── .env               # Local API key storage (not pushed to Git)
 │
 ├── Documents/         # Optional sample PDFs
 ├── helper/            # Helper scripts
 ```
 
-> ⚠️ At runtime, a **db/** folder (Chroma vectore store) and a **temp/** folder will be created automatically. These are excluded from Git via .gitignore.
+> ⚠️ At runtime, a **faiss_db/** folder (FAISS vectore store) and a **temp/** folder will be created automatically. These are excluded from Git via .gitignore.

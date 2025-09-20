@@ -16,8 +16,8 @@ st.title("📄 Ask Questions to Your PDF 💬")
 # Load environment variables (e.g., for API keys)
 load_dotenv()
 
-# Directory for persisted vector store
-DB_DIR = "db"
+# Directory for persisted FAISS vector store
+DB_DIR = "faiss_db"
 
 # --- Initialize session state ---
 if "retriever" not in st.session_state:
@@ -62,20 +62,20 @@ with st.sidebar:
                     if not chunks:
                         raise ValueError("chunk_documents returned no chunks!")
 
-                    # --- Try to load existing vector store ---
+                    # --- Try to load existing FAISS store ---
                     vector_store = load_vector_store(DB_DIR)
 
                     if vector_store:
-                        st.info("♻️ Using existing persisted vector store.")
+                        st.info("♻️ Using existing persisted FAISS vector store.")
                     else:
-                        st.info("⚡ Creating new vector store (this may take a while)...")
+                        st.info("⚡ Creating new FAISS vector store (this may take a while)...")
                         vector_store = create_vector_store(chunks, persist=True, persist_dir=DB_DIR)
-                        st.success(f"✅ Debug: Vector store created with {len(chunks)} chunks.")
+                        st.success(f"✅ Debug: FAISS vector store created with {len(chunks)} chunks.")
 
-                    # Create hybrid retriever (with reranker + MMR)
+                    # Create hybrid retriever (dense + BM25 + reranker)
                     retriever = create_retriever(
-                        vectorstore=vector_store, # Dense retriever uses embeddings from here
-                        docs=chunks,  # Always pass chunks so BM25 works
+                        vectorstore=vector_store,  # Dense retriever
+                        docs=chunks,               # BM25 needs docs
                         search_k=15,
                         reranker_top_n=5,
                         mmr_lambda=0.5
