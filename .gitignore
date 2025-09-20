@@ -19,7 +19,7 @@ Thumbs.db
 *.json
 
 # Data & cache
-db/
+faiss_db/
 temp/
 Documents/
 *.bin
